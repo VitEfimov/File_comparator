@@ -65,13 +65,17 @@ HIGHLIGHTED REPORT saved at: C:/.../test_data/REPORT_test_data\report_MOCK_DATA.
 HIGHLIGHTED REPORT saved at: C:/.../test_data/REPORT_test_data\report_MOCK_DATA.xlsx_some_data.xlsx
 HIGHLIGHTED REPORT saved at: C:/.../test_data/REPORT_test_data\report_MOCK_DATA.csv_sheet.xlsx
 
-#############################################################
+
                    COMPIlATION COMPLEATED
-#############################################################
+
  from 2 files compared
+ 
 file_name: MOCK_DATA.xlsx | file_executions: 1 | sheet_name: ['extra_sheet'] missing: NOT EXECUTED | executed_sheets: 0 | total_rows: 0 | passed: 0 | number_fail: 0 | key_fail: 0 | sum_value_differences: 0 | max_difference: 0 
+
 file_name: MOCK_DATA.xlsx | file_executions: 1 | sheet_name: mock_data | executed_sheets: 1 | total_rows: 152 | passed: 144 | number_fail: 4 | key_fail: 4 | sum_value_differences: 114.00421 | max_difference: 70.0
+
 file_name: MOCK_DATA.xlsx | file_executions: 1 | sheet_name: some_data | executed_sheets: 2 | total_rows: 49 | passed: 49 | number_fail: 0 | key_fail: 0 | sum_value_differences: 0 | max_difference: 0
+
 file_name: MOCK_DATA.csv | file_executions: 2 | sheet_name: sheet | executed_sheets: 1 | total_rows: 150 | passed: 150 | number_fail: 0 | key_fail: 0 | sum_value_differences: 0 | max_difference: 0
 
 ERROR: Sheet(s) ['extra_sheet'] missing in C:/.../test_data/package_2\MOCK_DATA.xlsx
