@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Comparison Results</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container-result">
+    <h1>Comparison Results</h1>
+
+    <pre>{{ output }}</pre>
+
+    {% if total %}
+      <a href="{{ url_for('download_total') }}">Download Total Report</a>
+    {% endif %}
+
+    {% if highlighted %}
+      <h3>📘 Highlighted Reports:</h3>
+      <ul>
+        {% for path in highlighted %}
+                <li><a href="{{ url_for('download_highlighted', index=loop.index0) }}">Download Highlighted Report {{ path.split('/')[-1] }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <p><a href="/">← Back to Upload</a></p>
+  </div>
+</body>
+</html>
+
+
