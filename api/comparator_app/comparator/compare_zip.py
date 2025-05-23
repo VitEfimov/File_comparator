@@ -4,8 +4,11 @@ from tabulate import tabulate
 # from comparator_app.comparator.sheet_comparator import compare_sheets
 # from comparator_app.comparator.comparator_utils import round_number
 
-from comparator.sheet_comparator import compare_sheets
-from comparator.comparator_utils import round_number
+# from comparator.sheet_comparator import compare_sheets
+# from comparator.comparator_utils import round_number
+
+from comparator_app.comparator.sheet_comparator import compare_sheets
+from comparator_app.comparator.comparator_utils import round_number
 
 
 def compare_directory(dir1, dir2, config):

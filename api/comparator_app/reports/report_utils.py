@@ -1,9 +1,23 @@
 import io
 from flask import send_file
 from openpyxl import load_workbook
-from .styles import thin_border, bold_font
 from openpyxl.utils import get_column_letter
 
+from openpyxl.styles import Border, Side, PatternFill, Font
+
+
+thin_border = Border(
+    left=Side(style="thin"),
+    right=Side(style="thin"),
+    top=Side(style="thin"),
+    bottom=Side(style="thin")
+)
+
+yellow_fill = PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")
+red_fill = PatternFill(start_color="F8CBAD", end_color="F8CBAD", fill_type="solid")
+green_fill = PatternFill(start_color="E2F0D9", end_color="E2F0D9", fill_type="solid")
+
+bold_font = Font(bold=True)
 
 def apply_border(ws):
     for row in ws.iter_rows(min_row=1, max_row=ws.max_row, min_col=1, max_col=ws.max_column):

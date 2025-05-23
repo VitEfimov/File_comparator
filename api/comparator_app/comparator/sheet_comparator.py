@@ -1,4 +1,7 @@
 import os
+# from reader.csv_xlsx_reader import read_file
+# from comparator.table_comparator import compare_table
+# from comparator.comparator_utils import round_number
 from comparator_app.reader.csv_xlsx_reader import read_file
 from comparator_app.comparator.table_comparator import compare_table
 from comparator_app.comparator.comparator_utils import round_number

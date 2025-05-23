@@ -12,7 +12,10 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import threading
 from comparator_app.comparator.compare_zip import compare_directory
 from comparator_app.reports.report_methods import highlighted_report, total_report
+# from comparator.compare_zip import compare_directory
+# from reports.report_methods import highlighted_report, total_report
 
+# from comparator_app.comparator.compare_zip
 
 app = Flask(__name__)
 

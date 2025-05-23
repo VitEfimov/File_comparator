@@ -1,5 +1,4 @@
 import pandas as pd
-from comparator_app.utils.colors import Colors
 
 def read_file(file_path):
     try:
@@ -12,4 +11,4 @@ def read_file(file_path):
         else:
             raise ValueError("VALUE ERROR! Use .csv or .xlsx files")
     except FileNotFoundError:
-        Colors.colored_print(f"FILE NOT FOUND: {file_path}", "FAIL")
+        print(f"FILE NOT FOUND: {file_path}", "FAIL")
