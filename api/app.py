@@ -6,12 +6,13 @@ import zipfile
 import shutil
 
 from flask import Flask, render_template, request, send_file
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import threading
 from comparator_app.comparator.compare_zip import compare_directory
 from comparator_app.reports.report_methods import highlighted_report, total_report
-from comparator_app.reports.styles import red_fill,green_fill,bold_font
+
 
 app = Flask(__name__)
 
