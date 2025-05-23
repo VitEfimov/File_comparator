@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Comparison Results</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container-result">
+    <h1>Comparison Results</h1>
+      {% if highlighted_output %}
+      <table class="result-table">
+        <thead>
+          <tr>
+            <th>file_name</th>
+            <th>file_executions</th>
+            <th>sheet_name</th>
+            <th>executed_sheets</th>
+            <th>total_rows</th>
+            <th>pass</th>
+            <th>number_fail</th>
+            <th>key_fail</th>
+            <th>sum_value_differences</th>
+            <th>max_difference</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in results %}
+          <tr>
+            <td class="{% if 'NOT EXECUTED' in row.sheet_name or 'missed' in row.sheet_name %}coral{% endif %}">
+              {{ row.file_name }}
+            </td>
+            <td>
+              {{ row.file_executions }}
+            </td>
+            <td class="{% if 'NOT EXECUTED' in row.sheet_name or 'missed' in row.sheet_name %}coral{% endif %}">
+              {{ row.sheet_name }}
+            </td>
+            <td>{{ row.executed_sheets }}</td>
+            <td>{{ row.total_rows }}</td>
+            <td class="{{ 'green' if row.pass > 0 else 'red' }}">{{ row.pass }}</td>
+            <td class="{{ 'red' if row.number_fail > 0 else '' }}">{{ row.number_fail }}</td>
+            <td class="{{ 'red' if row.key_fail > 0 else '' }}">{{ row.key_fail }}</td>
+            <td class="{% if row.sum_value_differences|float >= 1 or row.sum_value_differences|float <= -1 %}red
+                        {% elif row.sum_value_differences|float >= 0.5 or row.sum_value_differences|float <= -0.5 %}yellow
+                        {% endif %}">
+              {{ row.sum_value_differences }}
+            </td>
+            <td class="{% if row.max_difference|float >= 1 or row.max_difference|float <= -1 %}red
+                        {% elif row.max_difference|float >= 0.5 or row.max_difference|float <= -0.5 %}yellow
+                        {% endif %}">
+              {{ row.max_difference }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+    <pre>{{ output }}</pre>
+
+    {% if total %}
+      <h3><a href="{{ url_for('download_total') }}">Download Total Report</a></h3>
+    {% endif %}
+
+    {% if highlighted and create_reports %}
+      <h3>📘 Highlighted Reports:</h3>
+      <ul>
+        {% for path in highlighted %}
+                <li><a href="{{ url_for('download_highlighted', index=loop.index0) }}">Download Highlighted Report {{ path.split('/')[-1] }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <p><a href="/">← Back to Upload</a></p>
+  </div>
+</body>
+</html>
+
+
