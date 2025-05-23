@@ -98,3 +98,63 @@ pre {
   white-space: pre-wrap;
   word-wrap: break-word;
 }
+
+
+
+
+
+
+
+
+
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.result-table th,
+.result-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.result-table th {
+  background-color: #0067b1;
+  color: white;
+}
+
+.result-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.result-table tr:hover {
+  background-color: #eef5ff;
+}
+
+.red {
+  background-color: #ffd4d4;
+  color: #a10000;
+  font-weight: bold;
+}
+
+.coral {
+  background-color: #ffd6cc;
+  /* color: #a10000; */
+  /* font-weight: bold; */
+}
+
+.green {
+  background-color: #d2f8d2;
+  color: #007500;
+  font-weight: bold;
+}
+
+.yellow {
+  background-color: #fffacc;
+  color: #8a6d00;
+  font-weight: bold;
+}

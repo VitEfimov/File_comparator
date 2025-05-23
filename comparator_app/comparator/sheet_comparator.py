@@ -1,8 +1,7 @@
 import os
 from comparator_app.reader.csv_xlsx_reader import read_file
-from comparator_app.configurator import errors
 from comparator_app.comparator.table_comparator import compare_table
-from comparator_app.utils.colors import Colors
+from comparator_app.comparator.comparator_utils import round_number
 
 # Optional: Reusable default structure
 def default_sheet_result():
@@ -19,9 +18,11 @@ def default_sheet_result():
         'summary_differences': []
     }
 
-def compare_sheets(file_path1, file_path2, create_reports):
+def compare_sheets(file_path1, file_path2, config):
     sheets_file1 = read_file(file_path1)
     sheets_file2 = read_file(file_path2)
+    errors = config.get('errors', [])
+
 
     common_sheets = set(sheets_file1.keys()) & set(sheets_file2.keys())
     missed_sheets = []
@@ -30,20 +31,14 @@ def compare_sheets(file_path1, file_path2, create_reports):
         missed_sheets = list((set(sheets_file1.keys()) | set(sheets_file2.keys())) - common_sheets)
     
     total_sheets_print = []
-    all_differences = []
     all_highlighted = []
 
-
     if missed_sheets:
-        errors.append(
-            Colors.colored_print(
-                f'ERROR: Sheet(s) {missed_sheets} missing in {file_path2}', 'FAIL', True
-            )
-        )
+        errors.append(f'ERROR: Sheet(s) {missed_sheets} missing in {file_path2}')
         total_missed_sheets = default_sheet_result()
         total_missed_sheets.update({
             'file_name': 'missed',
-            'sheet_name': f'{missed_sheets} missing: NOT EXECUTED'
+            'sheet_name': f'sheet missed: {missed_sheets}, NOT EXECUTED'
         })
         total_sheets_print.append(total_missed_sheets)
 
@@ -54,11 +49,7 @@ def compare_sheets(file_path1, file_path2, create_reports):
             df1 = sheets_file1[sheet]
             df2 = sheets_file2[sheet]
         except Exception as e:
-            errors.append(
-                Colors.colored_print(
-                    f'ERROR: {e} - Sheet name mismatch or missing in {file_path1}', 'FAIL', True
-                )
-            )
+            errors.append(f'ERROR: {e} - Sheet name mismatch or missing in {file_path1}')
             total_sheets = default_sheet_result()
             total_sheets.update({
                 'file_name': file_name,
@@ -74,14 +65,14 @@ def compare_sheets(file_path1, file_path2, create_reports):
             'executed_sheets': i
         })
 
-        total, highlighted, differences, = compare_table(
+        total, highlighted = compare_table(
             file_name,
             file_path1,
             file_path2,
             sheet,
-            df1, df2,
-            create_reports
+            df1, df2,config
         )
+
 
         total_sheets.update({
             'total_rows': total['total_rows'],
@@ -90,13 +81,9 @@ def compare_sheets(file_path1, file_path2, create_reports):
             'key_fail': total['key_fail'],
             'sum_value_differences': total['sum_value_differences'],
             'max_difference': total['max'],
+            # 'sum_value_differences': sum_val,
+            # 'max_difference': max_val,
             'summary_differences': total['summary_differences']
-        })
-        
-        all_differences.append({
-            'file_name': file_name,
-            'sheet_name': sheet,
-            'differences': differences
         })
         
         all_highlighted.append({
@@ -104,27 +91,11 @@ def compare_sheets(file_path1, file_path2, create_reports):
             'sheet_name': sheet,
             'highlighted': highlighted
         })
-
+        
         if total['missed_headers']:
             total_sheets['sheet_name'] = f"{sheet} headers missed: {total['missed_headers']}"
-            
-        print(len(all_highlighted))
-        for i, item in enumerate(all_highlighted):
-            print(f"{i}: file_name={item['file_name']}, sheet={item['sheet_name']}, highlights={len(item['highlighted'])}")
 
         total_sheets_print.append(total_sheets)
         
-        # for x in all_differences:
-        #     print(f'\n {x}')
-            
-        # for x in all_full_records:
-        #     print(f'\n {x}')
-        
-        # print('\n\n\ntotal_sheets_print from sheet_comparator',total_sheets_print)
-        # print('\n\n\nall_all_highlighted ########################',all_highlighted)
-        # print('\n\n\nall_differences ########################',all_differences)
-
-        
-
-    return total_sheets_print, all_highlighted, all_differences
+    return total_sheets_print, all_highlighted
 

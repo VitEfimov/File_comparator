@@ -1,18 +1,14 @@
 import os
 import pandas as pd
-
 from tabulate import tabulate
-from comparator_app.utils.colors import Colors
 from comparator_app.comparator.sheet_comparator import compare_sheets
+from comparator_app.comparator.comparator_utils import round_number
 
 
 def compare_directory(dir1, dir2, config):
-    create_reports = config.get('create_reports', False)
-    one_file_report = config.get('one_file_report', None)
-    print_total_table = config.get('print_total_table', False)
     errors = config.get('errors', [])
-
-    # TOTAL_REPORT_FILE = total_report_path
+    decimal = config.get('decimal', 5)
+    highlighted_output = config.get('highlighted_output', True)
     total_print = []
     missed_files = []
 
@@ -24,16 +20,13 @@ def compare_directory(dir1, dir2, config):
             only_in_2 = files2_set - files1_set
             missed_files = sorted(only_in_1 | only_in_2)
 
-            errors.append(Colors.colored_print(
-                f'ERROR: directories: {dir1} and {dir2} do not have the same files', 'FAIL', True))
+            errors.append(f'ERROR: directories: {dir1} and {dir2} do not have the same files')
             if only_in_1:
-                errors.append(Colors.colored_print(
-                    f'Files only in {dir1}: {only_in_1}', 'FAIL', True))
+                errors.append(f'Files only in {dir1}: {only_in_1}')
             if only_in_2:
-                errors.append(Colors.colored_print(
-                    f'Files only in {dir2}: {only_in_2}', 'FAIL', True))
+                errors.append(f'Files only in {dir2}: {only_in_2}')
     except FileNotFoundError as e:
-        Colors.colored_print(f'{e}', "FAIL")
+        print(f'{e}', "FAIL")
 
     files1 = {f for f in os.listdir(dir1) if f.endswith(('.xlsx', 'csv'))}
     files2 = {f for f in os.listdir(dir2) if f.endswith(('.xlsx', 'csv'))}
@@ -57,9 +50,9 @@ def compare_directory(dir1, dir2, config):
 
     for missed in missed_files:
         missed_entry = {
-            'file_name': f'{missed}, file missed: NOT EXECUTED',
+            'file_name': f'missed: {missed}',
             'file_executions': 0,
-            'sheet_name': 'NONE',
+            'sheet_name': 'NOT EXECUTED',
             'executed_sheets': 0,
             'total_rows': 0,
             'pass': 0,
@@ -69,15 +62,19 @@ def compare_directory(dir1, dir2, config):
             'max_difference': 0
         }
         total_print.append(missed_entry)
+        
+    highlighted_dfs = []
 
     for idx, file_name in enumerate(common_files, start=1):
         file_path1 = os.path.join(dir1, file_name)
         file_path2 = os.path.join(dir2, file_name)
-        local_create_reports = create_reports or (one_file_report == file_name)
 
-        total, highlighted, differences = compare_sheets(file_path1, file_path2, local_create_reports)
+        total, highlighted = compare_sheets(file_path1, file_path2, config)
+
+        highlighted_dfs.extend(highlighted)
 
         for each in total:
+         
             total_each_file = {
                 'file_name': file_name,
                 'file_executions': idx,
@@ -96,35 +93,18 @@ def compare_directory(dir1, dir2, config):
             critical['number'] += 1
             critical['file_name'].append(file_name)
             critical_file_details.append(critical)
-            Colors.colored_print(f'ERROR: comparation failed for {file_name}', 'FAIL')
-
-    print(f'\n\nCOMPILATION RESULTS'
-          f'\n\n{files_qty} files compared')
+            print(f'ERROR: comparation failed for {file_name}', 'FAIL')
 
     if critical['number'] > 0:
-        Colors.colored_print(f'PAY ATTENTION\nCRITICAL ERROR {critical["file_name"]} NOT EXECUTED', 'FAIL')
-
-    if print_total_table:
-        headers = [
-            'file_name', 'file_executions', 'sheet_name',
-            'executed_sheets', 'total_rows', 'pass',
-            'number_fail', 'key_fail',
-            'sum_value_differences', 'max_difference'
-        ]
-        data = [[
-            x['file_name'], x['file_executions'], x['sheet_name'],
-            x['executed_sheets'], x['total_rows'], x['pass'],
-            x['number_fail'], x['key_fail'],
-            x['sum_value_differences'], x['max_difference']
-        ] for x in total_print]
-
-        print(tabulate(data, headers=headers, tablefmt='double'))
-
-    else:
+        print(f'PAY ATTENTION\nCRITICAL ERROR {critical["file_name"]} NOT EXECUTED', 'FAIL')
+        
+    
+    if not highlighted_output:
+        
+        print(f'\n\nCOMPILATION RESULTS'
+          f'\n\n{files_qty} files compared')
         for x in total_print:
-            file_name = x['file_name']
-            file_executions = x['file_executions']
-            sheet_name = x['sheet_name']
+
             executed_sheets = x['executed_sheets']
             total_rows = x['total_rows']
             passed = x['pass']
@@ -132,7 +112,7 @@ def compare_directory(dir1, dir2, config):
             key_fail = x['key_fail']
             sum_diff = x['sum_value_differences']
             max_diff = x['max_difference']
-
+            
             if executed_sheets > 0:
                 summary['executed_sheets'] += 1
             summary['total_rows'] += total_rows
@@ -142,43 +122,65 @@ def compare_directory(dir1, dir2, config):
             summary['sum_value_differences'] += sum_diff
             summary['max_difference'] = max(summary['max_difference'], max_diff)
 
+        headers = [
+            'file_name', 'file_executions', 'sheet_name',
+            'executed_sheets', 'total_rows', 'pass',
+            'number_fail', 'key_fail',
+            'sum_value_differences', 'max_difference'
+        ]
+        
+        for x in total_print:
+            if len(x['file_name']) > 30:
+                x['file_name'] = x['file_name'][:30] 
+            if len(x['sheet_name']) > 30:
+                x['sheet_name'] = x['sheet_name'][:30] 
+
+            x['sum_value_differences'] = f"{round_number(x['sum_value_differences'], decimal):.{decimal}f}"
+            x['max_difference'] = f"{round_number(x['max_difference'], decimal):.{decimal}f}"
+                
+        data = [[
+            x['file_name'], x['file_executions'], x['sheet_name'],
+            x['executed_sheets'], x['total_rows'], x['pass'],
+            x['number_fail'], x['key_fail'],
+            x['sum_value_differences'], x['max_difference']
+        ] for x in total_print]
+        # data.append(summary)
 
 
-            print(
-                f'file_name: {file_name} | '
-                f'file_executions: {file_executions} | '
-                f'sheet_name: {sheet_name} | '
-                f'executed_sheets: {executed_sheets} | '
-                f'total_rows: {total_rows} | '
-                f'passed: {passed} | '
-                f'number_fail: {number_fail} | '
-                f'key_fail: {key_fail} | '
-                f'sum_value_differences: {sum_diff} | '
-                f'max_difference: {max_diff}'
-            )
+        print(tabulate(data, headers=headers, tablefmt='double'))
+    else:
+        for x in total_print:
+
+            executed_sheets = x['executed_sheets']
+            total_rows = x['total_rows']
+            passed = x['pass']
+            number_fail = x['number_fail']
+            key_fail = x['key_fail']
+            sum_diff = x['sum_value_differences']
+            max_diff = x['max_difference']
+            
+            if executed_sheets > 0:
+                summary['executed_sheets'] += 1
+            summary['total_rows'] += total_rows
+            summary['pass'] += passed
+            summary['number_fail'] += number_fail
+            summary['key_fail'] += key_fail
+            summary['sum_value_differences'] += sum_diff
+            summary['max_difference'] = max(summary['max_difference'], max_diff)
 
     print()
+
     total_print.append(summary)
 
     if len(errors) > 0:
         for i, err in enumerate(errors):
-            Colors.colored_print(f'{err}')
+            print(f'{err}')
     
     unmatched_files = [x for x in common_files if x not in [file['file_name'] for file in total_print]]
     if len(total_print) - critical['number'] < files_qty:
-        Colors.colored_print(f'FATAL ERROR: {critical["number"]} file(s) did not compare: {unmatched_files}', 'FAIL')
+        print(f'FATAL ERROR: {critical["number"]} file(s) did not compare: {unmatched_files}', 'FAIL')
 
     df_total = pd.DataFrame(total_print)
 
-    df_diff = differences
-    highlighted_dfs = highlighted
-    # print('\n\n\nhighlighted_dfs from compare.zip',highlighted_dfs)
-    # print('\n\n\ndf_diff from compare.zip',df_diff)
-    
-    # print(len(highlighted_dfs))
-    # for i, item in enumerate(highlighted_dfs):
-    #     print(f"{i}: file_name={item['file_name']}, sheet={item['sheet_name']}, highlights={len(item['highlighted'])}")
-
-
-    return df_total, df_diff, highlighted_dfs
+    return df_total, highlighted_dfs
 

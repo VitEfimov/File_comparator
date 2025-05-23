@@ -1,6 +1,4 @@
-import os
-from comparator_app.utils.colors import Colors
-from comparator_app.configurator import decimal, errors
+# from comparator_app.configurator import decimal, errors
 from comparator_app.comparator.comparator_utils import dictionary, key_creator, check_headers, round_number
 
 
@@ -8,8 +6,11 @@ def compare_table(file_name,
                   file_path1,
                   file_path2,
                   sheet_name,
-                  df1, df2,
-                  create_reports):
+                  df1, df2, config):
+    
+    errors = config.get('errors', [])
+    decimal = config.get('decimal', 5)
+
 
     total = {
         'number_fail': 0,
@@ -23,14 +24,14 @@ def compare_table(file_name,
         'summary_differences': []
     }
 
-    total['missed_headers'] = check_headers(df1, df2, file_path1, file_path2, sheet_name)
+    total['missed_headers'] = check_headers(df1, df2, file_path1, file_path2, sheet_name, errors)
 
-    data1 = dictionary(df1)
-    data2 = dictionary(df2)
+    data1 = dictionary(df1,errors)
+    data2 = dictionary(df2,errors)
 
     if len(data1) != len(data2):
         msg = f'ERROR: {file_name} - number of rows mismatch'
-        errors.append(Colors.colored_print(msg, 'FAIL', True))
+        errors.append(msg)
 
     differences = []
     highlighted = []
@@ -44,11 +45,11 @@ def compare_table(file_name,
         data2 = key_creator(data2)
         dict1 = {tuple(row['key']): row['values'] for row in data1}
         dict2 = {tuple(row['key']): row['values'] for row in data2}
-        Colors.colored_print(f'FAIL {file_name}, {sheet_name} - custom keys added', 'HEADER')
-
-    keys1 = list(dict1.keys())
-    keys2 = list(dict2.keys())
-    all_keys = keys1 + keys2
+        # errors.append(f'FAIL {file_name}, {sheet_name} - custom keys added')
+    
+    keys1 = set(dict1.keys())
+    keys2 = set(dict2.keys())
+    all_keys = keys1 | keys2
 
     for key in all_keys:
         if key not in dict1:
@@ -62,8 +63,8 @@ def compare_table(file_name,
             missed_keys.append(f'{key} missing in {file_path2}')
             continue
 
-        row1_val = [round_number(val) for val in dict1[key]]
-        row2_val = [round_number(val) for val in dict2[key]]
+        row1_val = [round_number(val, decimal) for val in dict1[key]]
+        row2_val = [round_number(val, decimal) for val in dict2[key]]
 
         total['total_rows'] += 1
         difference = []
@@ -81,23 +82,23 @@ def compare_table(file_name,
                 total['max_difference'] = max(total['max_difference'], max_diff)
 
                 significant_diffs = [v2 - v1 for v1, v2 in zip(row1_val, row2_val) if abs(v2 - v1) > 10 ** -decimal]
-                difference = [round_number(diff) for diff in significant_diffs]
+                difference = [round_number(diff, decimal) for diff in significant_diffs]
 
-                total['sum_value_differences'] += round_number(sum(difference))
+                total['sum_value_differences'] += round_number(sum(difference), decimal)
 
                 if total['max'] < max_diff:
-                    total['max'] = round_number(max_diff)
+                    total['max'] = round_number(max_diff, decimal)
             else:
                 diff1 = [val for val in row1_val if val not in row2_val]
                 diff2 = [val for val in row2_val if val not in row1_val]
-                difference = [abs(round_number(d)) for d in (diff1 + diff2) if abs(d) > 10 ** -decimal]
-                total['sum_value_differences'] += round_number(sum(difference))
+                difference = [abs(round_number(d, decimal)) for d in (diff1 + diff2) if abs(d) > 10 ** -decimal]
+                total['sum_value_differences'] += round_number(sum(difference), decimal)
 
             differences.append({
                 'key': key,
                 'value_file1': row1_val,
                 'value_file2': row2_val,
-                'max_diff': round_number(max(difference) if difference else 0),
+                'max_diff': round_number(max(difference) if difference else 0, decimal),
                 'difference': difference
             })
 
@@ -107,7 +108,7 @@ def compare_table(file_name,
             'value_file2': row2_val,
             'match': match_status_val,
             'difference': difference,
-            'max_diff': round_number(max(difference) if difference else 0)
+            'max_diff': round_number(max(difference) if difference else 0, decimal)
 
         })
 
@@ -117,6 +118,6 @@ def compare_table(file_name,
 
     total['summary_differences'] = differences
     
-    return total, highlighted, differences
+    return total, highlighted
 
 
