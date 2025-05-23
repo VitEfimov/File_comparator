@@ -171,6 +171,6 @@ def compare():
                                results=results, create_reports=create_reports,)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
 
 
