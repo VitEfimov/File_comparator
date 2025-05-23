@@ -1,6 +1,5 @@
-# from comparator_app.configurator import decimal, errors
-from comparator_app.comparator.comparator_utils import dictionary, key_creator, check_headers, round_number
-
+# from comparator_app.comparator.comparator_utils import dictionary, key_creator, check_headers, round_number
+from comparator.comparator_utils import dictionary, key_creator, check_headers, round_number
 
 def compare_table(file_name,
                   file_path1,
