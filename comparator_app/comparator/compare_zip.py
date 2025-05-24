@@ -6,6 +6,7 @@ from tabulate import tabulate
 
 # from comparator.sheet_comparator import compare_sheets
 # from comparator.comparator_utils import round_number
+from decimal import Decimal
 
 from comparator_app.comparator.sheet_comparator import compare_sheets
 from comparator_app.comparator.comparator_utils import round_number
@@ -141,8 +142,8 @@ def compare_directory(dir1, dir2, config):
             if len(x['sheet_name']) > 30:
                 x['sheet_name'] = x['sheet_name'][:30] 
 
-            x['sum_value_differences'] = f"{round_number(x['sum_value_differences'], decimal):.{decimal}f}"
-            x['max_difference'] = f"{round_number(x['max_difference'], decimal):.{decimal}f}"
+            x['sum_value_differences'] = Decimal(x['sum_value_differences'])
+            x['max_difference'] = Decimal(x['max_difference'])
                 
         data = [[
             x['file_name'], x['file_executions'], x['sheet_name'],
