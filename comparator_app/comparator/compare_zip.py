@@ -142,14 +142,25 @@ def compare_directory(dir1, dir2, config):
             if len(x['sheet_name']) > 30:
                 x['sheet_name'] = x['sheet_name'][:30] 
 
+            print(x['sum_value_differences'])
             x['sum_value_differences'] = Decimal(x['sum_value_differences'])
+            print(x['sum_value_differences'])
+
             x['max_difference'] = Decimal(x['max_difference'])
                 
         data = [[
-            x['file_name'], x['file_executions'], x['sheet_name'],
-            x['executed_sheets'], x['total_rows'], x['pass'],
-            x['number_fail'], x['key_fail'],
-            x['sum_value_differences'], x['max_difference']
+            x['file_name'],
+            x['file_executions'],
+            x['sheet_name'],
+            x['executed_sheets'],
+            x['total_rows'],
+            x['pass'],
+            x['number_fail'],
+            x['key_fail'],
+            f"{x['sum_value_differences']:.10f}",  # <- formatted string
+            f"{x['max_difference']:.10f}" 
+            # Decimal(x['sum_value_differences']),
+            # Decimal(x['max_difference'])
         ] for x in total_print]
         # data.append(summary)
 

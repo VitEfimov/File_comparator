@@ -56,7 +56,7 @@ def index():
             except Exception as e:
                 print(f"⚠️ Failed to delete {file_path}: {e}")
     generated_dataframes["total"] = None
-    generated_dataframes["differences"] = None
+    # generated_dataframes["differences"] = None
     generated_dataframes["highlighted"] = []
     
     return render_template('index.html')
