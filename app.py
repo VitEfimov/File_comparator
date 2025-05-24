@@ -83,7 +83,7 @@ def download_highlighted(index):
     try:
         report_data = generated_dataframes["highlighted"][index]
     except (IndexError, TypeError):
-        return "❌ Highlighted report not found.", 400
+        return "❌ Highlighted report not found. Possible couse for rendered version - not enough CPU. To get access for whole functionality you can use File_comparator_prototype", 400
 
     file_name = report_data.get('file_name', f"file_{index}")
     
