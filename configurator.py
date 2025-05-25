@@ -6,12 +6,12 @@ print_total_table = False
 create_reports = True
 create_highlight_reports = True
 one_file_report = ''
-project_name = 'test_data'
+project_name = ''
 
 errors = []
 package_1= "package_1"
 package_2= "package_2"
-base_directory = 'C:/.../File_comparator'
+base_directory = 'test_folder'
 project_path = os.path.join(base_directory, project_name).replace('\\', '/')
 package1_directory = os.path.join(project_path, package_1).replace('\\', '/')
 package2_directory = os.path.join(project_path, package_2).replace('\\', '/')
