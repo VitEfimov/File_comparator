@@ -76,7 +76,7 @@ def compare_sheets(file_path1, file_path2, config):
         start_time = time.time()
 
         if (sorting):
-            print('if (sorting)')
+            # print('if (sorting)')
             start_time = time.time()
 
             total, highlighted = compare_table_by_sorted_strings(
@@ -89,10 +89,10 @@ def compare_sheets(file_path1, file_path2, config):
             end_time = time.time()
 
             execution_time = end_time - start_time
-            print(f"Execution time: {execution_time:.4f} seconds")
+            print(f"Execution time {file_name}: {execution_time:.4f} seconds")
             # print(sorted)
         else:
-            print('else')
+            # print('else')
 
             start_time = time.time()
 
@@ -106,7 +106,7 @@ def compare_sheets(file_path1, file_path2, config):
             end_time = time.time()
 
             execution_time = end_time - start_time
-            print(f"Execution time: {execution_time:.4f} seconds")
+            print(f"Execution time {file_name}: {execution_time:.4f} seconds")
 
 
         total_sheets.update({
