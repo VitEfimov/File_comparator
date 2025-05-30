@@ -4,7 +4,9 @@ import os
 # from comparator.comparator_utils import round_number
 from comparator_app.reader.csv_xlsx_reader import read_file
 from comparator_app.comparator.table_comparator import compare_table
-from comparator_app.comparator.comparator_utils import round_number
+# from comparator_app.comparator.comparator_utils import round_number
+from comparator_app.comparator.sorted_table_comparator import compare_table_by_sorted_strings
+import time
 
 # Optional: Reusable default structure
 def default_sheet_result():
@@ -25,6 +27,10 @@ def compare_sheets(file_path1, file_path2, config):
     sheets_file1 = read_file(file_path1)
     sheets_file2 = read_file(file_path2)
     errors = config.get('errors', [])
+    sorting = config.get('sorting', False)
+    # print(sorting, errors)
+    # for e in errors:
+    #     print(e)
 
 
     common_sheets = set(sheets_file1.keys()) & set(sheets_file2.keys())
@@ -67,14 +73,40 @@ def compare_sheets(file_path1, file_path2, config):
             'sheet_name': sheet,
             'executed_sheets': i
         })
+        start_time = time.time()
 
-        total, highlighted = compare_table(
+        if (sorting):
+            print('if (sorting)')
+            start_time = time.time()
+
+            total, highlighted = compare_table_by_sorted_strings(
             file_name,
             file_path1,
             file_path2,
             sheet,
             df1, df2,config
-        )
+            )
+            end_time = time.time()
+
+            execution_time = end_time - start_time
+            print(f"Execution time: {execution_time:.4f} seconds")
+            # print(sorted)
+        else:
+            print('else')
+
+            start_time = time.time()
+
+            total, highlighted = compare_table(
+                file_name,
+                file_path1,
+                file_path2,
+                sheet,
+                df1, df2,config
+            )
+            end_time = time.time()
+
+            execution_time = end_time - start_time
+            print(f"Execution time: {execution_time:.4f} seconds")
 
 
         total_sheets.update({

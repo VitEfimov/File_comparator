@@ -199,6 +199,8 @@ def compare_directory(dir1, dir2, config):
         print(f'FATAL ERROR: {critical["number"]} file(s) did not compare: {unmatched_files}', 'FAIL')
 
     df_total = pd.DataFrame(total_print)
+    
+    # print(highlighted_dfs)
 
     return df_total, highlighted_dfs
 

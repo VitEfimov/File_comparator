@@ -25,13 +25,13 @@ generated_dataframes = {
     "highlighted": []
 }
 
-def schedule_cleanup(delay_minutes=10):
-    def cleanup():
-        generated_dataframes["total"] = None
-        generated_dataframes["differences"] = None
-        generated_dataframes["highlighted"] = []
-        print("🧹 Automatic cleanup complete.")
-    threading.Timer(delay_minutes * 0.5, cleanup).start()
+# def schedule_cleanup(delay_minutes=10):
+#     def cleanup():
+#         generated_dataframes["total"] = None
+#         generated_dataframes["differences"] = None
+#         generated_dataframes["highlighted"] = []
+#         print("🧹 Automatic cleanup complete.")
+#     threading.Timer(delay_minutes * 0.5, cleanup).start()
 
 def extract_and_locate_root(zip_file, extract_to):
     with zipfile.ZipFile(zip_file) as zip_ref:
@@ -87,9 +87,11 @@ def download_highlighted(index):
 
     file_name = report_data.get('file_name', f"file_{index}")
     
-    print(file_name)
+    # print(file_name)
     sheet_name = report_data.get('sheet_name', f"sheet_{index}")
     records = report_data.get('highlighted', [])
+    
+    # print("records\n\n\n",records)
     
     output_file = os.path.join(tempfile.gettempdir(), f'{file_name}_{sheet_name}_Highlighted_Report.xlsx')
 
@@ -101,7 +103,8 @@ def download_highlighted(index):
     return send_file(
         output_file,
         as_attachment=True,
-        download_name=f'{file_name}_{sheet_name}_Highlighted_Report.xlsx',
+        download_name=os.path.basename(output_file),
+        # download_name=f'{file_name}_{sheet_name}_Highlighted_Report.xlsx',
         mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
@@ -142,12 +145,14 @@ def compare():
         decimal = int(request.form.get('decimal', 5))
         create_reports = 'create_reports' in request.form
         highlighted_output = 'highlighted_output' in request.form
+        sorting = 'sorting' in request.form
 
         config = {
             'decimal': decimal,
             'highlighted_output': highlighted_output,
             'create_reports': create_reports,
-            'errors': []
+            'errors': [],
+            'sorting': sorting
         }
 
         buffer = io.StringIO()

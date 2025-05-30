@@ -66,7 +66,7 @@
       <h3>📘 Highlighted Reports:</h3>
       <ul>
         {% for path in highlighted %}
-                <li><a href="{{ url_for('download_highlighted', index=loop.index0) }}">Download Highlighted Report {{ path.split('/')[-1] }}</a></li>
+                <li><a href="{{ url_for('download_highlighted', index=loop.index0) }}">Download Highlighted Report {{ loop.index }}</a></li>
         {% endfor %}
       </ul>
     {% endif %}
