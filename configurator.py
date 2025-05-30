@@ -6,12 +6,12 @@ print_total_table = False
 create_reports = True
 create_highlight_reports = True
 one_file_report = ''
-project_name = ''
+project_name = 'test_data'
 
 errors = []
 package_1= "package_1"
 package_2= "package_2"
-base_directory = 'test_folder'
+base_directory = ''
 project_path = os.path.join(base_directory, project_name).replace('\\', '/')
 package1_directory = os.path.join(project_path, package_1).replace('\\', '/')
 package2_directory = os.path.join(project_path, package_2).replace('\\', '/')

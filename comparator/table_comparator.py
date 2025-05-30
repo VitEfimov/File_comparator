@@ -45,11 +45,17 @@ def compare_table(file_name,
     dict2 = {tuple(row['key']): row['values'] for row in data2}
 
     if len(dict1) != len(data1) or len(dict2) != len(data2):
-        data1 = key_creator(data1)
-        data2 = key_creator(data2)
-        dict1 = {tuple(row['key']): row['values'] for row in data1}
-        dict2 = {tuple(row['key']): row['values'] for row in data2}
-        Colors.colored_print(f'FAIL {file_name}, {sheet_name} - custom keys added', 'HEADER')
+        is_str = False
+        for x in data1[1]:
+            if isinstance(x, str):
+                is_str = True
+                
+        if not is_str:
+            data1 = key_creator(data1)
+            data2 = key_creator(data2)
+            dict1 = {tuple(row['key']): row['values'] for row in data1}
+            dict2 = {tuple(row['key']): row['values'] for row in data2}
+            errors.append(f'FAIL {file_name}, {sheet_name} - custom keys added')
 
     keys1 = set(dict1.keys())
     keys2 = set(dict2.keys())
