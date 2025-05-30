@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Comparison Results (Example)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* body { font-family: Arial; padding: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background-color: #f0f0f0; } */
+        .fail { background-color: #ffcccc; }
+        .pass { background-color: #ccffcc; }
+    </style>
+</head>
+<body>
+    <div class="container-result">
+        <h2>Comparison Results (Mock Example)</h2>
+            <table class="result-table">
+                <thead>
+                    <tr>
+                        <th>file_name</th>
+                        <th>sheet_name</th>
+                        <th>total_rows</th>
+                        <th>pass</th>
+                        <th>number_fail</th>
+                        <th>key_fail</th>
+                        <th>sum_value_differences</th>
+                        <th>max_difference</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fail">missed: MOCK_DATA_old.xlsx</td>
+                        <td class="fail">NOT EXECUTED</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0.0</td>
+                        <td>0.0</td>
+                    </tr>
+                    <tr>
+                        <td class="fail">missed: MOCK_DATA_old_csv.csv</td>
+                        <td class="fail">NOT EXECUTED</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0.0</td>
+                        <td>0.0</td>
+                    </tr>
+                    <tr>
+                        <td class="fail">MOCK_DATA.xlsx</td>
+                        <td class="fail">sheet missed: ['extra_sheet'], NOT EXECUTED</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0.0</td>
+                        <td>0.0</td>
+                    </tr>
+                    <tr>
+                        <td>banana_quality_dataset.xlsx</td>
+                        <td>banana_quality_dataset.csv</td>
+                        <td>976</td>
+                        <td class="pass">967</td>
+                        <td class="fail">5</td>
+                        <td class="fail">4</td>
+                        <td class="fail">2343.45</td>
+                        <td class="fail">2210.0</td>
+                    </tr>
+                    <tr>
+                        <td>MOCK_DATA.xlsx</td>
+                        <td>mock_data</td>
+                        <td>152</td>
+                        <td class="pass">144</td>
+                        <td class="fail">4</td>
+                        <td class="fail">4</td>
+                        <td class="fail">-114.0</td>
+                        <td class="fail">70.0</td>
+                    </tr>
+                                        <tr>
+                        <td>MOCK_DATA.xlsx</td>
+                        <td>some_data</td>
+                        <td>46</td>
+                        <td class="pass">46</td>
+                        <td class="fail">3</td>
+                        <td class="fail">0</td>
+                        <td class="fail">-45.95812</td>
+                        <td class="fail">46.0</td>
+                    </tr>
+                                        <tr>
+                        <td>Test_500.xlsx</td>
+                        <td>MOCK_DATA (1).csv</td>
+                        <td>502</td>
+                        <td class="pass">494</td>
+                        <td class="fail">4</td>
+                        <td class="fail">4</td>
+                        <td class="fail">-665488751.0</td>
+                        <td class="fail">730893583.0</td>
+                    </tr>
+                                        <tr>
+                        <td>MOCK_DATA - csv.csv</td>
+                        <td>sheet</td>
+                        <td>152</td>
+                        <td class="pass">144</td>
+                        <td class="fail">3</td>
+                        <td class="fail">5</td>
+                        <td class="fail">31671.00874</td>
+                        <td class="fail">31190.0</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+
+        <h3>⚠️ Errors</h3>
+            <pre>
+Execution time banana_quality_dataset.xlsx: 0.7122 seconds
+Execution time MOCK_DATA.xlsx: 0.1024 seconds
+Execution time MOCK_DATA.xlsx: 0.0054 seconds
+Execution time MOCK_DATA - csv.csv: 0.0993 seconds
+Execution time Test_500.xlsx: 0.3985 seconds
+
+ERROR: directories: /tmp/tmptg0684pq/dir1/folder_1 and /tmp/tmptg0684pq/dir2/folder_2 do not have the same files
+Files only in /tmp/tmptg0684pq/dir1/folder_1: {'MOCK_DATA_old.xlsx'}
+Files only in /tmp/tmptg0684pq/dir2/folder_2: {'MOCK_DATA_old_csv.csv'}
+ERROR: Sheet(s) ['extra_sheet'] missing in /tmp/tmptg0684pq/dir2/folder_2/MOCK_DATA.xlsx
+ERROR: MOCK_DATA - csv.csv - number of rows mismatch
+            </pre>
+
+        <h3>📥 Download Example Reports</h3>
+            <ul>
+                <li><a href="static/examples/reports/Total_Report.xlsx">Download Total Report</a></li>
+                <li><a href="static/examples/reports/banana_quality_dataset.xlsx_banana_quality_dataset.csv_Highlighted_Report.xlsx">Download Highlighted Report 1</a></li>
+                <li><a href="static/examples/reports/MOCK_DATA - csv.csv_sheet_Highlighted_Report.xlsx">Download Highlighted Report 2</a></li>
+                <li><a href="static/examples/reports/MOCK_DATA.xlsx_mock_data_Highlighted_Report.xlsx">Download Highlighted Report 3</a></li>
+                <li><a href="static/examples/reports/MOCK_DATA.xlsx_some_data_Highlighted_Report.xlsx">Download Highlighted Report 4</a></li>
+                <li><a href="static/examples/reports/Test_500.xlsx_MOCK_DATA.csv_Highlighted_Report.xlsx">Download Highlighted Report 5</a></li>
+            </ul>
+
+        <h3>🗂️ Example Input</h3>
+            <ul>
+                <li><a href="static/examples/upload_data/folder_1.zip">Folder 1 zip (Input)</a></li>
+                <li><a href="static/examples/upload_data/folder_2.zip">Folder 2 zip (Input)</a></li>
+            </ul>
+        <p><a href="/">← Back to Upload</a></p>
+    </div>
+</body>
+
+</html>

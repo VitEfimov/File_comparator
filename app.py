@@ -61,6 +61,11 @@ def index():
     
     return render_template('index.html')
 
+@app.route('/example')
+def example():
+    return render_template('example.html')
+    
+
 @app.route('/download_total')
 def download_total():
     records = generated_dataframes.get("total")
@@ -83,7 +88,7 @@ def download_highlighted(index):
     try:
         report_data = generated_dataframes["highlighted"][index]
     except (IndexError, TypeError):
-        return "❌ Highlighted report not found. Possible couse for rendered version - not enough CPU. To get access for whole functionality you can use branch prototype in File_comparator on github", 400
+        return "❌ Highlighted report not found. Possible couse for rendered version - not enough CPU. To get access for whole functionality you can use branch prototype in File_comparator on github or you can see an example", 400
 
     file_name = report_data.get('file_name', f"file_{index}")
     
