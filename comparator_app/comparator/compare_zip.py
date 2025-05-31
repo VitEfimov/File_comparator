@@ -20,7 +20,7 @@ def compare_directory(dir1, dir2, config):
     missed_files = []
 
     try:
-        if set(os.listdir(dir1)) != set(os.listdir(dir2)):
+        if len(dir1) > 1 and len(dir2) > 1 and set(os.listdir(dir1)) != set(os.listdir(dir2)):
             files1_set = set(os.listdir(dir1))
             files2_set = set(os.listdir(dir2))
             only_in_1 = files1_set - files2_set
@@ -37,7 +37,10 @@ def compare_directory(dir1, dir2, config):
 
     files1 = {f for f in os.listdir(dir1) if f.endswith(('.xlsx', 'csv'))}
     files2 = {f for f in os.listdir(dir2) if f.endswith(('.xlsx', 'csv'))}
+    
+    
     common_files = files1.intersection(files2)
+
 
     critical = {'number': 0, 'file_name': []}
     critical_file_details = []
