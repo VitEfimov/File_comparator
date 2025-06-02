@@ -38,7 +38,7 @@
             </td>
             <td>{{ row.executed_sheets }}</td>
             <td>{{ row.total_rows }}</td>
-            <td class="{{ 'green' if row.pass > 0 else 'red' }}">{{ row.pass }}</td>
+            <td class="{{ 'green' if row.pass > 0 and row.total_rows == row.pass else 'red' }}">{{ row.pass }}</td>
             <td class="{{ 'red' if row.number_fail > 0 else '' }}">{{ row.number_fail }}</td>
             <td class="{{ 'red' if row.key_fail > 0 else '' }}">{{ row.key_fail }}</td>
             <td class="{% if row.sum_value_differences|float >= 1 or row.sum_value_differences|float <= -1 %}red
