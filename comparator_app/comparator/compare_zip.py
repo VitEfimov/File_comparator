@@ -40,8 +40,11 @@ def compare_directory(dir1, dir2, config):
     
     not_comparable_files1 = {f for f in os.listdir(dir1) if not f.endswith(('.xlsx', 'csv'))} | {f for f in os.listdir(dir1) if not f.endswith(('.xlsx', 'csv'))}
     not_comparable_files2 = {f for f in os.listdir(dir2) if not f.endswith(('.xlsx', 'csv'))}
+    
+    dir1_name = os.path.basename(dir1)
+    dir2_name = os.path.basename(dir2)
     if (len(not_comparable_files1) > 0 or len(not_comparable_files2) > 0):
-        errors.append(f'Files not avialable to compare: {not_comparable_files1} from {dir1.split("\\")[-1]} and {not_comparable_files2} from {dir2.split("\\")[-1]}')
+        errors.append(f'Files not avialable to compare: {not_comparable_files1} from {dir1_name} and {not_comparable_files2} from {dir2_name}')
     
     common_files = files1.intersection(files2)
 
