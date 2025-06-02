@@ -1,6 +1,6 @@
 📁 File Comparator CLI Tool
 
-This project is a Python-based application that compares .csv and .xlsx files from two directories or files. It checks for differences in sheet names, headers, keys, and numeric values, and generates a detailed report summarizing the results.
+This project is a Python-based application that compares .csv and .xlsx files from two directories or files. It checks for differences in sheet names, headers, keys (string), and numeric values, and generates a detailed report summarizing the results.
 
 🧩 Features✅ Supports .csv and .xlsx file formats
 
