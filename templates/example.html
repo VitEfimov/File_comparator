@@ -71,7 +71,7 @@
                         <td class="fail">2210.0</td>
                     </tr>
                     <tr>
-                        <td>MOCK_DATA.xlsx</td>
+                        <td>Test_data.xlsx</td>
                         <td>mock_data</td>
                         <td>152</td>
                         <td class="">144</td>
@@ -81,7 +81,7 @@
                         <td class="fail">70.0</td>
                     </tr>
                     <tr>
-                        <td>MOCK_DATA.xlsx</td>
+                        <td>Test_data.xlsx</td>
                         <td>some_data</td>
                         <td>49</td>
                         <td class="">46</td>
@@ -91,17 +91,17 @@
                         <td class="fail">46.0</td>
                     </tr>
                     <tr>
-                        <td>MOCK_DATA.xlsx</td>
-                        <td>passed_data</td>
-                        <td>255</td>
-                        <td class="pass">255</td>
+                        <td>Passed_data.xlsx</td>
+                        <td>sheet</td>
+                        <td>50</td>
+                        <td class="pass">50</td>
                         <td class="pass">0</td>
                         <td class="pass">0</td>
                         <td class="pass">0.0</td>
                         <td class="pass">0.0</td>
                     </tr>
                     <tr>
-                        <td>Test_500.xlsx</td>
+                        <td>Test_500_records_big_data.xlsx</td>
                         <td>MOCK_DATA (1).csv</td>
                         <td>502</td>
                         <td class="">494</td>
@@ -111,7 +111,7 @@
                         <td class="fail">730893583.0</td>
                     </tr>
                     <tr>
-                        <td>MOCK_DATA - csv.csv</td>
+                        <td>Test_data_csv.csv</td>
                         <td>sheet</td>
                         <td>152</td>
                         <td class="">144</td>
@@ -126,28 +126,32 @@
 
         <h3>⚠️ Errors</h3>
             <pre>
-Execution time banana_quality_dataset.xlsx: 0.7122 seconds
-Execution time MOCK_DATA.xlsx: 0.1024 seconds
-Execution time MOCK_DATA.xlsx: 0.0054 seconds
-Execution time MOCK_DATA.xlsx: 0.0648 seconds
-Execution time MOCK_DATA - csv.csv: 0.0993 seconds
-Execution time Test_500.xlsx: 0.3985 seconds
+Execution time Passed_data.csv_sheet: 0.0048 seconds
+Execution time Test_500_records_big data.xlsx_MOCK_DATA (1).csv: 0.0448 seconds
+Execution time Test_data_xlsx.xlsx_some_data: 0.0039 seconds
+Execution time Test_data_xlsx.xlsx_mock_data: 0.0128 seconds
+Execution time Test_data_csv.csv_sheet: 0.0131 seconds
+Execution time banana_quality_dataset.xlsx_banana_quality_dataset.csv: 0.1111 seconds
 
-ERROR: directories: /tmp/tmptg0684pq/dir1/folder_1 and /tmp/tmptg0684pq/dir2/folder_2 do not have the same files
-Files only in /tmp/tmptg0684pq/dir1/folder_1: {'MOCK_DATA_old.xlsx'}
-Files only in /tmp/tmptg0684pq/dir2/folder_2: {'MOCK_DATA_old_csv.csv'}
-ERROR: Sheet(s) ['extra_sheet'] missing in /tmp/tmptg0684pq/dir2/folder_2/MOCK_DATA.xlsx
-ERROR: MOCK_DATA - csv.csv - number of rows mismatch
+ERROR: directories: C:\Users\15717\AppData\Local\Temp\tmpktpye53h\dir1\folder_1 and C:\Users\15717\AppData\Local\Temp\tmpktpye53h\dir2\folder_2 do not have the same files
+Files only in C:\Users\15717\AppData\Local\Temp\tmpktpye53h\dir1\folder_1: {'File_not_present.xlsx'}
+Files only in C:\Users\15717\AppData\Local\Temp\tmpktpye53h\dir2\folder_2: {'Csv_file_not present.csv'}
+The following files are not in '.csv' or '.xlsx' format and cannot be compared:
+- From 'folder_1': ['Recipe.docx']
+- From 'folder_2': ['Recipe.docx']
+ERROR: Sheet(s) ['extra_sheet'] missing in C:\Users\15717\AppData\Local\Temp\tmpktpye53h\dir2\folder_2\Test_data_xlsx.xlsx
+ERROR: Test_data_csv.csv - number of rows mismatch
             </pre>
 
         <h3>📥 Download Example Reports</h3>
             <ul>
                 <li><a href="static/examples/reports/Total_Report.xlsx">Download Total Report</a></li>
                 <li><a href="static/examples/reports/banana_quality_dataset.xlsx_banana_quality_dataset.csv_Highlighted_Report.xlsx">Download Highlighted Report 1</a></li>
-                <li><a href="static/examples/reports/MOCK_DATA - csv.csv_sheet_Highlighted_Report.xlsx">Download Highlighted Report 2</a></li>
-                <li><a href="static/examples/reports/MOCK_DATA.xlsx_mock_data_Highlighted_Report.xlsx">Download Highlighted Report 3</a></li>
-                <li><a href="static/examples/reports/MOCK_DATA.xlsx_some_data_Highlighted_Report.xlsx">Download Highlighted Report 4</a></li>
-                <li><a href="static/examples/reports/Test_500.xlsx_MOCK_DATA.csv_Highlighted_Report.xlsx">Download Highlighted Report 5</a></li>
+                <li><a href="static/examples/reports/Passed_data.csv_sheet_Highlighted_Report.xlsx">Download Highlighted Report 2</a></li>
+                <li><a href="static/examples/reports/Test_500_records_big data.xlsx_MOCK_DATA (1).csv_Highlighted_Report.xlsx">Download Highlighted Report 3</a></li>
+                <li><a href="static/examples/reports/Test_data_csv.csv_sheet_Highlighted_Report.xlsx">Download Highlighted Report 4</a></li>
+                <li><a href="static/examples/reports/Test_data_xlsx.xlsx_mock_data_Highlighted_Report.xlsx">Download Highlighted Report 5</a></li>
+                <li><a href="static/examples/reports/Test_data_xlsx.xlsx_some_data_Highlighted_Report.xlsx">Download Highlighted Report 5</a></li>
             </ul>
 
         <h3>🗂️ Example Input</h3>
