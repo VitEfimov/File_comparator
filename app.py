@@ -64,7 +64,10 @@ def index():
 @app.route('/example')
 def example():
     return render_template('example.html')
-    
+
+@app.route('/instruction')
+def instruction():
+    return render_template('instruction.html')
 
 @app.route('/download_total')
 def download_total():
@@ -173,6 +176,10 @@ def compare():
             return render_template('result.html', output=f'❌ Comparison failed: {str(e)}')
 
         sys.stdout = sys_stdout_original
+        #    if not highlighted_dfs:
+        #     final_output = "❌ No comparable .csv or .xlsx files were found in the uploaded directories."
+        # else:
+        #     final_output = buffer.getvalue()
         final_output = buffer.getvalue()
         
 
