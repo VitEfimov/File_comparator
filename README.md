@@ -47,8 +47,9 @@ test_data/
     └── MOCK_DATA.xlsx
 
 3. ▶️ Run the Tool
-
-python main.py
+   
+python app.py
+(python main.py)
 This script will:
 
 Read and compare files from the predefined directories (you can update them inside main.py)
