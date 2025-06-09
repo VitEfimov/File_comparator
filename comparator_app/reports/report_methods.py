@@ -9,7 +9,10 @@ from openpyxl.styles import PatternFill
 from openpyxl.utils import get_column_letter
 
 
+
 def highlighted_report(file_name, sheet_name, records, output_file):
+    # decimal = config.get('decimal', 5)
+    
     wb = Workbook()
     ws = wb.active
     ws.title = sheet_name
@@ -32,7 +35,7 @@ def highlighted_report(file_name, sheet_name, records, output_file):
         difference = str(record.get('difference', []))
         max_diff = record.get('max_diff', "")
         
-        row = [key, value_file1, value_file2, match, difference, max_diff]
+        row = [key, value_file1, value_file2, match, max_diff, difference]
         ws.append(row)
         
         fill = None

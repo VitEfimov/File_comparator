@@ -154,13 +154,15 @@ def compare():
         create_reports = 'create_reports' in request.form
         highlighted_output = 'highlighted_output' in request.form
         sorting = 'sorting' in request.form
+        print_difference = 'print_difference' in request.form
 
         config = {
             'decimal': decimal,
             'highlighted_output': highlighted_output,
             'create_reports': create_reports,
             'errors': [],
-            'sorting': sorting
+            'sorting': sorting,
+            'print_difference': print_difference
         }
 
         buffer = io.StringIO()

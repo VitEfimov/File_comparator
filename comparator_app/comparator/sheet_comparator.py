@@ -103,7 +103,7 @@ def compare_sheets(file_path1, file_path2, config):
             end_time = time.time()
 
             execution_time = end_time - start_time
-            print(f"Execution time {file_name}_{sheet}: {execution_time:.4f} seconds")
+            print(f"\nExecution time {file_name}_{sheet}: {execution_time:.4f} seconds\n")
 
 
         total_sheets.update({

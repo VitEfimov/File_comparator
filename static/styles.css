@@ -18,7 +18,7 @@ body {
 }
 
 .container-result{
-   max-width: fit-content;
+  max-width: fit-content;
   margin: 40px auto;
   background-color: #ffffff;
   padding: 30px 40px;
