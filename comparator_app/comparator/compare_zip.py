@@ -1,12 +1,6 @@
 import os
 import pandas as pd
 from tabulate import tabulate
-# from comparator_app.comparator.sheet_comparator import compare_sheets
-# from comparator_app.comparator.comparator_utils import round_number
-
-# from comparator.sheet_comparator import compare_sheets
-# from comparator.comparator_utils import round_number
-# from decimal import Decimal
 
 from comparator_app.comparator.sheet_comparator import compare_sheets
 from comparator_app.comparator.comparator_utils import round_number

@@ -136,6 +136,7 @@ def compare():
             if is_zip(file1) and is_zip(file2):
                 dir1 = extract_and_locate_root(file1, dir1_root)
                 dir2 = extract_and_locate_root(file2, dir2_root)
+                print('ZIP')
             elif not is_zip(file1) and not is_zip(file2):
                 path1 = os.path.join(dir1_root, file1.filename)
                 path2 = os.path.join(dir2_root, file2.filename)
@@ -143,6 +144,7 @@ def compare():
                 file2.save(path2)
                 dir1 = dir1_root
                 dir2 = dir2_root
+                print('NOT ZIP')
             else:
                 return render_template('result.html', output='❌ Either upload 2 ZIPs or 2 individual files (not one of each).')
         except zipfile.BadZipFile:

@@ -92,7 +92,7 @@ def compare_table(file_name,
                 significant_diffs = [v2 - v1 for v1, v2 in zip(row1_val, row2_val) if abs(v2 - v1) > 10 ** -decimal]
                 # difference = [round_number(diff, decimal) for diff in significant_diffs]
                 difference = {i+1: round_number(abs(v2 - v1), decimal) for i, (v1, v2) in enumerate(zip(row1_val, row2_val)) if abs(v2 - v1) > 10 ** -decimal}
-                print(difference)
+                # print(difference)
 
                 total['sum_value_differences'] += round_number(sum(difference.values()), decimal)
 
