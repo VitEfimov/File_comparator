@@ -63,12 +63,12 @@ def compare_table(file_name,
         if key not in dict1:
             total['total_rows'] += 1
             total['key_fail'] += 1
-            missed_keys.append(f'{key} missing in {file_path1.split("\\")[-1]}')
+            missed_keys.append(f'{key} missing in {file_name}, {sheet_name}')
             continue
         if key not in dict2:
             total['total_rows'] += 1
             total['key_fail'] += 1
-            missed_keys.append(f'{key} missing in {file_path2.split("\\")[-1]}')
+            missed_keys.append(f'{key} missing in {file_name}, {sheet_name}')
             continue
 
         row1_val = [round_number(val, decimal) for val in dict1[key]]
