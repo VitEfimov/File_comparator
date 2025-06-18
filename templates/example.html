@@ -127,13 +127,166 @@
 
         <h3>⚠️ Errors</h3>
             <pre>
-Execution time Passed_data.csv_sheet: 0.0048 seconds
-Execution time Test_500_records_big data.xlsx_MOCK_DATA (1).csv: 0.0448 seconds
-Execution time Test_data_xlsx.xlsx_some_data: 0.0039 seconds
-Execution time Test_data_xlsx.xlsx_mock_data: 0.0128 seconds
-Execution time Test_data_csv.csv_sheet: 0.0131 seconds
-Execution time banana_quality_dataset.xlsx_banana_quality_dataset.csv: 0.1111 seconds
+----- file name: Test_500_records_big data.xlsx, sheet name: MOCK_DATA (1).csv -----
 
+KEY: ('Eilis', "D'eathe", 'edeathe1m@epa.gov')
+File 1 Values: [59.0, 1096.0, 65.0]
+File 2 Values: [59.0, 1096.0, 65404913.0]
+Differences: {3: 65404848.0}
+Max Diff: 65404848.0
+------
+KEY: ('Hallsy', 'Hemms', 'hhemmsh@cnn.com')
+File 1 Values: [18.0, 1715.0, 91205607.0]
+File 2 Values: [18.0, 1717.0, 91205607.0]
+Differences: {2: 2.0}
+Max Diff: 2.0
+------
+KEY: ('', 'Anthe', '', 'acord17@yolasite.com')
+File 1 Values: [1588.0, 82901619.0]
+File 2 Values: [1570.0, 82901619.0]
+Differences: {1: 18.0}
+Max Diff: 18.0
+------
+KEY: ('Rufus', 'Lorenzetti', '')
+File 1 Values: [54.0, 2327.0, 812103981.0]
+File 2 Values: [54.0, 2327.0, 81210398.0]
+Differences: {3: 730893583.0}
+Max Diff: 730893583.0
+------
+Missed keys: ('Whittakerffdf', 'Benn', 'wbenn2q@joomla.org') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir2\folder_2\Test_500_records_big data.xlsx
+Missed keys: ('Petr', 'Singleton', 'psingletonu@bloglines.com') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir1\folder_1\Test_500_records_big data.xlsx
+Missed keys: ('Whittaker', 'Benn', 'wbenn2q@joomla.org') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir1\folder_1\Test_500_records_big data.xlsx
+Missed keys: ('Petr', 'Singleton', 'psingletonu@bloglines.com', '242fr072715') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir2\folder_2\Test_500_records_big data.xlsx
+
+Execution time Test_500_records_big data.xlsx_MOCK_DATA (1).csv: 0.0485 seconds
+
+----- file name: banana_quality_dataset.xlsx, sheet name: banana_quality_dataset.csv -----
+
+KEY: ('Burro', 'Brazil', 'Processing', 'Ripe', '2023-09-04 00:00:00')
+File 1 Values: [7.0, 2.44, 5.15, 19.15, 4.58, 17.22, 212.06, 11.3, 800.3, 2513.1, 67.2]
+File 2 Values: [7.0, 2.44, 5.15, 18.15, 4.58, 17.22, 212.06, 11.3, 800.3, 2513.1, 67.2]
+Differences: {4: 1.0}
+Max Diff: 1.0
+------
+KEY: ('Cavendish', 'Guatemala', 'Processing', 'Ripe', '2023-09-26 00:00:00')
+File 1 Values: [38.0, 2.44, 15.35, 16.06, 4.91, 25.88, 244.87, 17.7, 672.9, 2710.2, 170.8]
+File 2 Values: [38.0, 2.44, 5.35, 16.06, 4.91, 25.88, 244.87, 17.7, 672.9, 2710.2, 170.8]
+Differences: {3: 10.0}
+Max Diff: 10.0
+------
+KEY: ('Burro', 'Ecuador', 'Premium', 'Overripe', '2023-09-08 00:00:00')
+File 1 Values: [3.0, 3.57, 6.7245, 21.34, 1.63, 25.2, 225.27, 17.7, 1246.9, 1191.5, 147.7]
+File 2 Values: [3.0, 3.57, 6.24, 21.34, 1.63, 25.2, 225.27, 17.7, 1246.9, 1191.5, 147.7]
+Differences: {3: 0.4845}
+Max Diff: 0.4845
+------
+KEY: ('Fehi', 'Costa Rica', 'Good', 'Ripe', '2023-10-06 00:00:00')
+File 1 Values: [6.0, 2.72, 4.95, 25.32, 4.25, 15.36, 94.98, 19.3, 565.2, 1727.5, 74.7]
+File 2 Values: [6.0, 2.72, 4.95, 20.32, 4.25, 15.36, 94.98, 19.3, 565.2, 1727.5, 74.7]
+Differences: {4: 5.0}
+Max Diff: 5.0
+------
+KEY: ('Fehi', 'India', 'Good', 'Ripe', '2023-09-23 00:00:00')
+File 1 Values: [18.0, 3.38, 4.41, 21.3, 2.32, 27.91, 134.75, 11.824, 117.8453, 25.5, 14.5]
+File 2 Values: [18.0, 3.38, 4.41, 21.3, 2.32, 27.91, 134.75, 11.8, 117.8, 2235.5, 164.5]
+Differences: {8: 0.024, 9: 0.0453, 10: 2210.0, 11: 150.0}
+Max Diff: 2210.0
+------
+Missed keys: ('Red Dacca', 'Ecuador', 'Processings', 'Ripe', '2023-10-02 00:00:00') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir2\folder_2\banana_quality_dataset.xlsx
+Missed keys: ('Red Dacca', 'Ecuador', 'Processing', 'Ripe', '2023-10-02 00:00:00') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir1\folder_1\banana_quality_dataset.xlsx
+Missed keys: ('Blue Java', 'Colombia', 'Processing', 'Turning', '2023-09-04 00:00:00') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir1\folder_1\banana_quality_dataset.xlsx
+Missed keys: ('Blue Java', 'CoLombia', 'Processings', 'Turning', '2023-09-04 00:00:00') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir2\folder_2\banana_quality_dataset.xlsx
+
+Execution time banana_quality_dataset.xlsx_banana_quality_dataset.csv: 0.1241 seconds
+
+----- file name: Test_data_csv.csv, sheet name: sheet -----
+
+KEY: ('DK13 2114 5766 0520 95', '')
+File 1 Values: [2019.0, 20.32835, 22.20597, 22.99]
+File 2 Values: [2019.0, 20.32835, 22.20597, 22.99874]
+Differences: {4: 0.00874}
+Max Diff: 0.00874
+------
+KEY: ('TR07 5268 2YWM TXNS DDJB TDYH CG', '')
+File 1 Values: [2019.0, 7.53757, 8.57464, 21.1]
+File 2 Values: [2500.0, 7.53757, 8.57464, 21.1]
+Differences: {1: 481.0}
+Max Diff: 481.0
+------
+KEY: ('IS40 9180 4001 1378 4881 1907 39', '')
+File 1 Values: [2009.0, 31.19619, 33.19297, 34.65]
+File 2 Values: [2009.0, 31221.19619, 33.19297, 34.65]
+Differences: {2: 31190.0}
+Max Diff: 31190.0
+------
+Missed keys: ('', 'local') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir1\folder_1\Test_data_csv.csv
+Missed keys: ('MC25 6140 6612 40NT JOOH KYXP H72', 'local') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir2\folder_2\Test_data_csv.csv
+Missed keys: ('AD11 8389 0233 NS7R WURI 9OPT', 'Progressive') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir2\folder_2\Test_data_csv.csv
+Missed keys: ('GB84 DMNZ 2243 3445 8251 77', 'Sharable') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir2\folder_2\Test_data_csv.csv
+Missed keys: ('AD11 8389 0233 NS7R WURI 9OPT', '') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir1\folder_1\Test_data_csv.csv
+
+Execution time Test_data_csv.csv_sheet: 0.0128 seconds
+
+----- file name: Passed_data.csv, sheet name: sheet -----
+
+
+Execution time Passed_data.csv_sheet: 0.0039 seconds
+
+----- file name: Test_data_xlsx.xlsx, sheet name: mock_data -----
+
+KEY: ('PL70 3380 5531 5257 6545 0735 9929', 'Multi-layered')
+File 1 Values: [2019.0, 1.75088, 15.06291, 78.44]
+File 2 Values: [2019.0, 1.75088, 15.06291, 8.44]
+Differences: {4: 70.0}
+Max Diff: 70.0
+------
+KEY: ('IS96 7839 4200 8268 2110 4652 56', 'firmware')
+File 1 Values: [2052.0, 2.86685, 22.97517, 19.45]
+File 2 Values: [2007.0, 2.86685, 22.97517, 19.45]
+Differences: {1: 45.0}
+Max Diff: 45.0
+------
+KEY: ('CZ90 6388 1158 9085 1122 3730', 'knowledge user')
+File 1 Values: [2011.0, 12.29505, 33.03468, 6.11421]
+File 2 Values: [2011.0, 12.29505, 33.03468, 6.11]
+Differences: {4: 0.00421}
+Max Diff: 0.00421
+------
+KEY: ('HU52 9898 4213 5176 1777 7165 5419', 'encompassing')
+File 1 Values: [2012.0, 0.7833, 23.57441, 23.3]
+File 2 Values: [2012.0, 1.7833, 23.57441, 23.3]
+Differences: {2: 1.0}
+Max Diff: 1.0
+------
+Missed keys: ('FR98 284551 7558 90QW BNYS BCF3 S20', '') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir2\folder_2\Test_data_xlsx.xlsx
+Missed keys: ('IS48 8566 8524 3637 6575 2319 52', '') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir1\folder_1\Test_data_xlsx.xlsx
+Missed keys: ('FR98 2851 7558 90QW BNYS BCF3 S20', '') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir1\folder_1\Test_data_xlsx.xlsx
+Missed keys: ('IS48 8566 8524 3637 6575 2319 52', 'Additional comment89') missing in C:\Users\15717\AppData\Local\Temp\tmptgnyouk2\dir2\folder_2\Test_data_xlsx.xlsx
+
+Execution time Test_data_xlsx.xlsx_mock_data: 0.0123 seconds
+
+----- file name: Test_data_xlsx.xlsx, sheet name: some_data -----
+
+KEY: ('1976-02-28 00:00:00', 'Jabberbean', 'CNY', 'FIRST BANK S.A.')
+File 1 Values: [51.13802]
+File 2 Values: [5.13802]
+Differences: {1: 46.0}
+Max Diff: 46.0
+------
+KEY: ('1995-01-11 00:00:00', 'Kaymbo', 'RUB', 'OYAK ANKER Bank GmbH')
+File 1 Values: [1.14405]
+File 2 Values: [1.14404]
+Differences: {1: 1e-05}
+Max Diff: 1e-05
+------
+KEY: ('2010-08-03 00:00:00', 'Oyoloo', 'IDR', 'REGIONS BANK')
+File 1 Values: [7.56021]
+File 2 Values: [7.6021]
+Differences: {1: 0.04189}
+Max Diff: 0.04189
+------
+
+Execution time Test_data_xlsx.xlsx_some_data: 0.0067 seconds
 ERROR: directories: C:\Users\15717\AppData\Local\Temp\tmpktpye53h\dir1\folder_1 and C:\Users\15717\AppData\Local\Temp\tmpktpye53h\dir2\folder_2 do not have the same files
 Files only in C:\Users\15717\AppData\Local\Temp\tmpktpye53h\dir1\folder_1: {'File_not_present.xlsx'}
 Files only in C:\Users\15717\AppData\Local\Temp\tmpktpye53h\dir2\folder_2: {'Csv_file_not present.csv'}

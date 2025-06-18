@@ -28,6 +28,8 @@ def compare_sheets(file_path1, file_path2, config):
     sheets_file2 = read_file(file_path2)
     errors = config.get('errors', [])
     sorting = config.get('sorting', False)
+    print_difference = config.get('print_difference', True)
+
     # print(sorting, errors)
     # for e in errors:
     #     print(e)
@@ -91,7 +93,8 @@ def compare_sheets(file_path1, file_path2, config):
             print(f"Execution time {file_name}_{sheet}: {execution_time:.4f} seconds")
         else:
 
-            start_time = time.time()
+            if print_difference:
+                start_time = time.time()
 
             total, highlighted = compare_table(
                 file_name,
@@ -101,9 +104,9 @@ def compare_sheets(file_path1, file_path2, config):
                 df1, df2,config
             )
             end_time = time.time()
-
-            execution_time = end_time - start_time
-            print(f"\nExecution time {file_name}_{sheet}: {execution_time:.4f} seconds\n")
+            if print_difference:
+                execution_time = end_time - start_time
+                print(f"\nExecution time {file_name}_{sheet}: {execution_time:.4f} seconds\n")
 
 
         total_sheets.update({
