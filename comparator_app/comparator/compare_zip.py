@@ -12,6 +12,10 @@ def compare_directory(dir1, dir2, config):
     highlighted_output = config.get('highlighted_output', True)
     total_print = []
     missed_files = []
+    
+    base_dir1 = os.path.basename(dir1)
+    base_dir2 = os.path.basename(dir2)
+
 
     try:
         if len(dir1) > 1 and len(dir2) > 1 and set(os.listdir(dir1)) != set(os.listdir(dir2)):
@@ -21,29 +25,28 @@ def compare_directory(dir1, dir2, config):
             only_in_2 = files2_set - files1_set
             missed_files = sorted(only_in_1 | only_in_2)
 
-            errors.append(f'ERROR: directories: {dir1} and {dir2} do not have the same files')
+            errors.append(f'ERROR: directories: {base_dir1} and {base_dir2} do not have the same files')
             if only_in_1:
-                errors.append(f'Files only in {dir1}: {only_in_1}')
+                errors.append(f'Files only in {base_dir1}: {only_in_1}')
             if only_in_2:
-                errors.append(f'Files only in {dir2}: {only_in_2}')
+                errors.append(f'Files only in {base_dir2}: {only_in_2}')
     except FileNotFoundError as e:
         print(f'{e}', "FAIL")
 
     files1 = {f for f in os.listdir(dir1) if f.endswith(('.xlsx', 'csv'))}
     files2 = {f for f in os.listdir(dir2) if f.endswith(('.xlsx', 'csv'))}
     
-    not_comparable_files1 = {f for f in os.listdir(dir1) if not f.endswith(('.xlsx', 'csv'))} | {f for f in os.listdir(dir1) if not f.endswith(('.xlsx', 'csv'))}
+    not_comparable_files1 = {f for f in os.listdir(dir1) if not f.endswith(('.xlsx', 'csv'))}
     not_comparable_files2 = {f for f in os.listdir(dir2) if not f.endswith(('.xlsx', 'csv'))}
     
-    dir1_name = os.path.basename(dir1)
-    dir2_name = os.path.basename(dir2)
+    # dir1_name = os.path.basename(dir1)
+    # dir2_name = os.path.basename(dir2)
     if (len(not_comparable_files1) > 0 or len(not_comparable_files2) > 0):
-        # errors.append(f'Files not avialable to compare: {not_comparable_files1} from {dir1_name} and {not_comparable_files2} from {dir2_name}'
-        #               f'.csv and .xlsx files')
+
         errors.append(
             f"The following files are not in '.csv' or '.xlsx' format and cannot be compared:\n"
-            f"- From '{dir1_name}': {sorted(not_comparable_files1) if not_comparable_files1 else 'None'}\n"
-            f"- From '{dir2_name}': {sorted(not_comparable_files2) if not_comparable_files2 else 'None'}"
+            f"- From '{base_dir1}': {sorted(not_comparable_files1) if not_comparable_files1 else 'None'}\n"
+            f"- From '{base_dir2}': {sorted(not_comparable_files2) if not_comparable_files2 else 'None'}"
         )
     
     common_files = files1.intersection(files2)
@@ -152,11 +155,6 @@ def compare_directory(dir1, dir2, config):
             if len(x['sheet_name']) > 30:
                 x['sheet_name'] = x['sheet_name'][:30] 
 
-            # print(x['sum_value_differences'])
-            # x['sum_value_differences'] = Decimal(x['sum_value_differences'])
-            # # print(x['sum_value_differences'])
-
-            # x['max_difference'] = Decimal(x['max_difference'])
                 
         data = [[
             x['file_name'],
@@ -167,12 +165,10 @@ def compare_directory(dir1, dir2, config):
             x['pass'],
             x['number_fail'],
             x['key_fail'],
-            f"{x['sum_value_differences']:.10f}",  # <- formatted string
-            f"{x['max_difference']:.10f}" 
-            # Decimal(x['sum_value_differences']),
-            # Decimal(x['max_difference'])
+            f"{x['sum_value_differences']:.{decimal}f}",
+            f"{x['max_difference']:.{decimal}f}" 
+
         ] for x in total_print]
-        # data.append(summary)
 
 
         print(tabulate(data, headers=headers, tablefmt='double'))
@@ -210,7 +206,5 @@ def compare_directory(dir1, dir2, config):
 
     df_total = pd.DataFrame(total_print)
     
-    # print(highlighted_dfs)
-
     return df_total, highlighted_dfs
 

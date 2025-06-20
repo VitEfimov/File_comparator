@@ -1,14 +1,9 @@
 import os
-# from reader.csv_xlsx_reader import read_file
-# from comparator.table_comparator import compare_table
-# from comparator.comparator_utils import round_number
 from comparator_app.reader.csv_xlsx_reader import read_file
 from comparator_app.comparator.table_comparator import compare_table
-# from comparator_app.comparator.comparator_utils import round_number
 from comparator_app.comparator.sorted_table_comparator import compare_table_by_sorted_strings
 import time
 
-# Optional: Reusable default structure
 def default_sheet_result():
     return {
         'file_name': '',
@@ -30,11 +25,6 @@ def compare_sheets(file_path1, file_path2, config):
     sorting = config.get('sorting', False)
     print_difference = config.get('print_difference', True)
 
-    # print(sorting, errors)
-    # for e in errors:
-    #     print(e)
-
-
     common_sheets = set(sheets_file1.keys()) & set(sheets_file2.keys())
     missed_sheets = []
 
@@ -43,9 +33,11 @@ def compare_sheets(file_path1, file_path2, config):
     
     total_sheets_print = []
     all_highlighted = []
+    
+    
 
     if missed_sheets:
-        errors.append(f'ERROR: Sheet(s) {missed_sheets} missing in {file_path2}')
+        errors.append(f'ERROR: Sheet(s) {missed_sheets} missing in {"\\".join(file_path2.split("\\")[-2:])}')
         total_missed_sheets = default_sheet_result()
         total_missed_sheets.update({
             'file_name': 'missed',
@@ -116,8 +108,6 @@ def compare_sheets(file_path1, file_path2, config):
             'key_fail': total['key_fail'],
             'sum_value_differences': total['sum_value_differences'],
             'max_difference': total['max'],
-            # 'sum_value_differences': sum_val,
-            # 'max_difference': max_val,
             'summary_differences': total['summary_differences']
         })
         

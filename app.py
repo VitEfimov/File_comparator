@@ -9,13 +9,9 @@ from flask import Flask, render_template, request, send_file
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-import threading
 from comparator_app.comparator.compare_zip import compare_directory
 from comparator_app.reports.report_methods import highlighted_report, total_report
-# from comparator.compare_zip import compare_directory
-# from reports.report_methods import highlighted_report, total_report
 
-# from comparator_app.comparator.compare_zip
 
 app = Flask(__name__)
 
@@ -25,13 +21,6 @@ generated_dataframes = {
     "highlighted": []
 }
 
-# def schedule_cleanup(delay_minutes=10):
-#     def cleanup():
-#         generated_dataframes["total"] = None
-#         generated_dataframes["differences"] = None
-#         generated_dataframes["highlighted"] = []
-#         print("🧹 Automatic cleanup complete.")
-#     threading.Timer(delay_minutes * 0.5, cleanup).start()
 
 def extract_and_locate_root(zip_file, extract_to):
     with zipfile.ZipFile(zip_file) as zip_ref:
@@ -56,7 +45,6 @@ def index():
             except Exception as e:
                 print(f"⚠️ Failed to delete {file_path}: {e}")
     generated_dataframes["total"] = None
-    # generated_dataframes["differences"] = None
     generated_dataframes["highlighted"] = []
     
     return render_template('index.html')
@@ -94,15 +82,10 @@ def download_highlighted(index):
         return "❌ Highlighted report not found. Possible couse for rendered version - not enough CPU. To get access for whole functionality you can use branch prototype in File_comparator on github or you can see an example", 400
 
     file_name = report_data.get('file_name', f"file_{index}")
-    
-    # print(file_name)
     sheet_name = report_data.get('sheet_name', f"sheet_{index}")
     records = report_data.get('highlighted', [])
-    
-    # print("records\n\n\n",records)
-    
+        
     output_file = os.path.join(tempfile.gettempdir(), f'{file_name}_{sheet_name}_Highlighted_Report.xlsx')
-
     highlighted_report(file_name, sheet_name, records, output_file)
 
     if not os.path.exists(output_file):
@@ -112,7 +95,6 @@ def download_highlighted(index):
         output_file,
         as_attachment=True,
         download_name=os.path.basename(output_file),
-        # download_name=f'{file_name}_{sheet_name}_Highlighted_Report.xlsx',
         mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
@@ -136,7 +118,6 @@ def compare():
             if is_zip(file1) and is_zip(file2):
                 dir1 = extract_and_locate_root(file1, dir1_root)
                 dir2 = extract_and_locate_root(file2, dir2_root)
-                # print('ZIP')
             elif not is_zip(file1) and not is_zip(file2):
                 path1 = os.path.join(dir1_root, file1.filename)
                 path2 = os.path.join(dir2_root, file2.filename)
@@ -144,7 +125,6 @@ def compare():
                 file2.save(path2)
                 dir1 = dir1_root
                 dir2 = dir2_root
-                # print('NOT ZIP')
             else:
                 return render_template('result.html', output='❌ Either upload 2 ZIPs or 2 individual files (not one of each).')
         except zipfile.BadZipFile:
@@ -157,6 +137,7 @@ def compare():
         highlighted_output = 'highlighted_output' in request.form
         sorting = 'sorting' in request.form
         print_difference = 'print_difference' in request.form
+        ignore_name = 'ignore_name' in request.form
 
         config = {
             'decimal': decimal,
@@ -164,7 +145,8 @@ def compare():
             'create_reports': create_reports,
             'errors': [],
             'sorting': sorting,
-            'print_difference': print_difference
+            'print_difference': print_difference,
+            'ignore_name': ignore_name
         }
 
         buffer = io.StringIO()
@@ -180,10 +162,6 @@ def compare():
             return render_template('result.html', output=f'❌ Comparison failed: {str(e)}')
 
         sys.stdout = sys_stdout_original
-        #    if not highlighted_dfs:
-        #     final_output = "❌ No comparable .csv or .xlsx files were found in the uploaded directories."
-        # else:
-        #     final_output = buffer.getvalue()
         final_output = buffer.getvalue()
         
 

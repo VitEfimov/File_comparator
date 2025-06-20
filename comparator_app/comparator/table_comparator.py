@@ -1,5 +1,4 @@
 from comparator_app.comparator.comparator_utils import dictionary, key_creator, check_headers, round_number
-# from comparator.comparator_utils import dictionary, key_creator, check_headers, round_number
 
 def compare_table(file_name,
                   file_path1,
@@ -40,8 +39,6 @@ def compare_table(file_name,
     dict1 = {tuple(row['key']): row['values'] for row in data1}
     dict2 = {tuple(row['key']): row['values'] for row in data2}
     
-    # print(dict1)
-
     if len(dict1) != len(data1) or len(dict2) != len(data2):
         is_str = False
         for x in data1[1]:
@@ -90,9 +87,7 @@ def compare_table(file_name,
                 total['max_difference'] = max(total['max_difference'], max_diff)
 
                 significant_diffs = [v2 - v1 for v1, v2 in zip(row1_val, row2_val) if abs(v2 - v1) > 10 ** -decimal]
-                # difference = [round_number(diff, decimal) for diff in significant_diffs]
                 difference = {i+1: round_number(abs(v2 - v1), decimal) for i, (v1, v2) in enumerate(zip(row1_val, row2_val)) if abs(v2 - v1) > 10 ** -decimal}
-                # print(difference)
 
                 total['sum_value_differences'] += round_number(sum(difference.values()), decimal)
 
@@ -107,7 +102,6 @@ def compare_table(file_name,
                     for i, (v1, v2) in enumerate(zip(row1_val, row2_val))
                     if i < len(row1_val) and i < len(row2_val) and abs(v2 - v1) > 10 ** -decimal
                 }
-                # print(difference)
                 total['sum_value_differences'] += round_number(sum(difference.values()), decimal)
 
             differences.append({
@@ -127,8 +121,6 @@ def compare_table(file_name,
             'max_diff': round_number(max(difference.values()) if difference.values() else 0, decimal)
 
         })
-        
-    
 
     for x in missed_keys:
         differences.append({'key': x})
@@ -152,7 +144,6 @@ def compare_table(file_name,
         if missed_keys:
             for x in missed_keys:
                 print(f'Missed keys: {x}')
-        # print()
     total['summary_differences'] = differences
     
     return total, highlighted
