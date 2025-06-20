@@ -34,10 +34,11 @@ def compare_sheets(file_path1, file_path2, config):
     total_sheets_print = []
     all_highlighted = []
     
-    
+    short_path1 = os.path.join(*file_path1.split(os.sep)[-2:])
+    short_path2 = os.path.join(*file_path2.split(os.sep)[-2:])
 
     if missed_sheets:
-        errors.append(f'ERROR: Sheet(s) {missed_sheets} missing in {"\\".join(file_path2.split("\\")[-2:])}')
+        errors.append(f'ERROR: Sheet(s) {missed_sheets} missing in {short_path2}')
         total_missed_sheets = default_sheet_result()
         total_missed_sheets.update({
             'file_name': 'missed',
@@ -52,7 +53,7 @@ def compare_sheets(file_path1, file_path2, config):
             df1 = sheets_file1[sheet]
             df2 = sheets_file2[sheet]
         except Exception as e:
-            errors.append(f'ERROR: {e} - Sheet name mismatch or missing in {file_path1}')
+            errors.append(f'ERROR: {e} - Sheet name mismatch or missing in {short_path1}')
             total_sheets = default_sheet_result()
             total_sheets.update({
                 'file_name': file_name,
