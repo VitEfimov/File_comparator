@@ -16,7 +16,6 @@ def compare_directory(dir1, dir2, config):
     base_dir1 = os.path.basename(dir1)
     base_dir2 = os.path.basename(dir2)
 
-
     try:
         if len(dir1) > 1 and len(dir2) > 1 and set(os.listdir(dir1)) != set(os.listdir(dir2)):
             files1_set = set(os.listdir(dir1))
@@ -38,9 +37,7 @@ def compare_directory(dir1, dir2, config):
     
     not_comparable_files1 = {f for f in os.listdir(dir1) if not f.endswith(('.xlsx', 'csv'))}
     not_comparable_files2 = {f for f in os.listdir(dir2) if not f.endswith(('.xlsx', 'csv'))}
-    
-    # dir1_name = os.path.basename(dir1)
-    # dir2_name = os.path.basename(dir2)
+
     if (len(not_comparable_files1) > 0 or len(not_comparable_files2) > 0):
 
         errors.append(

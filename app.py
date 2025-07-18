@@ -9,6 +9,7 @@ from flask import Flask, render_template, request, send_file
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+from comparator_app.comparator.simple_compare import simple_compare
 from comparator_app.comparator.compare_zip import compare_directory
 from comparator_app.reports.report_methods import highlighted_report, total_report
 
@@ -105,6 +106,9 @@ def compare():
 
     file1 = request.files['zip1']
     file2 = request.files['zip2']
+    
+    single_file = False
+
 
     with tempfile.TemporaryDirectory() as temp_dir:
         dir1_root = os.path.join(temp_dir, 'dir1')
@@ -119,6 +123,7 @@ def compare():
                 dir1 = extract_and_locate_root(file1, dir1_root)
                 dir2 = extract_and_locate_root(file2, dir2_root)
             elif not is_zip(file1) and not is_zip(file2):
+                single_file = True
                 path1 = os.path.join(dir1_root, file1.filename)
                 path2 = os.path.join(dir2_root, file2.filename)
                 file1.save(path1)
@@ -137,7 +142,6 @@ def compare():
         highlighted_output = 'highlighted_output' in request.form
         sorting = 'sorting' in request.form
         print_difference = 'print_difference' in request.form
-        ignore_name = 'ignore_name' in request.form
 
         config = {
             'decimal': decimal,
@@ -146,7 +150,6 @@ def compare():
             'errors': [],
             'sorting': sorting,
             'print_difference': print_difference,
-            'ignore_name': ignore_name
         }
 
         buffer = io.StringIO()
@@ -154,9 +157,23 @@ def compare():
         sys.stdout = buffer
 
         try:
-            df_total, highlighted_dfs  = compare_directory(dir1, dir2, config)
-            generated_dataframes["total"] = df_total
-            generated_dataframes["highlighted"] = highlighted_dfs or []
+            if not single_file:
+                df_total, highlighted_dfs  = compare_directory(dir1, dir2, config)
+                generated_dataframes["total"] = df_total
+                generated_dataframes["highlighted"] = highlighted_dfs or []
+            
+            else:
+                file1_path = next((os.path.join(dir1, f) for f in os.listdir(dir1) if f.endswith(('.xlsx', '.csv'))), None)
+                file2_path = next((os.path.join(dir2, f) for f in os.listdir(dir2) if f.endswith(('.xlsx', '.csv'))), None)
+
+                if not file1_path or not file2_path:
+                   return render_template('result.html', output='❌ Could not locate valid .xlsx or .csv file in uploaded files.')
+
+                df_total, highlighted_dfs = simple_compare(file1_path, file2_path, config)
+            # else:
+            #     df_total, highlighted_dfs  = simple_compare(dir1, dir2, config)
+            #     generated_dataframes["total"] = df_total
+            #     generated_dataframes["highlighted"] = highlighted_dfs or []
         except Exception as e:
             sys.stdout = sys_stdout_original
             return render_template('result.html', output=f'❌ Comparison failed: {str(e)}')
